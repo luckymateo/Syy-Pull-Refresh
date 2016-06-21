@@ -1,4 +1,4 @@
-package syy.pull.refresh;
+package view.library.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.SwipeRefreshHeaderLayout;
 
-import syy.pull.R;
+import view.library.R;
 
 
 /**

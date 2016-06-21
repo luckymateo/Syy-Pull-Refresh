@@ -1,4 +1,4 @@
-package syy.pull.refresh;
+package view.library.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.aspsine.swipetoloadlayout.SwipeLoadMoreFooterLayout;
 
-import syy.pull.R;
+import view.library.R;
 
 
 /**

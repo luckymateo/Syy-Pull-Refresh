@@ -1,4 +1,4 @@
-package syy.pull.refresh;
+package view.library.refresh;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,9 +15,8 @@ import android.widget.ImageView;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
 
-import butterknife.Bind;
 import butterknife.ButterKnife;
-import syy.pull.R;
+import view.library.R;
 
 /**
  * PullRecyclerViewLayout
@@ -25,13 +24,9 @@ import syy.pull.R;
  */
 public class PullRecyclerViewLayout extends FrameLayout {
 
-    @Bind(R.id.iv_loading)
     ImageView mIvLoading;
-    @Bind(R.id.swipe_target)
     RecyclerView mSwipeTarget;
-    @Bind(R.id.swipeToLoadLayout)
     SwipeToLoadLayout mSwipeToLoadLayout;
-    @Bind(R.id.fl_loading)
     FrameLayout mFlLoading;
 
     private AnimationDrawable mAnimDrawable;
@@ -57,6 +52,10 @@ public class PullRecyclerViewLayout extends FrameLayout {
 
     private void setupView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_pull_recyclerview, this);
+        mIvLoading = (ImageView) findViewById(R.id.iv_loading);
+        mSwipeTarget = (RecyclerView) findViewById(R.id.swipe_target);
+        mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
+        mFlLoading = (FrameLayout) findViewById(R.id.fl_loading);
         ButterKnife.bind(this);
         initLoadAnimation();
     }
