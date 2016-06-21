@@ -17,3 +17,6 @@ Step 2. Add the dependency
         dependencies {
             compile 'com.github.SmileyCloud:Syy-Pull-Refresh:v1.0.0'
         }
+
+##Thanks
+**Aspsine：**[SwipeToLoadLayout](https://github.com/Aspsine/SwipeToLoadLayout)
