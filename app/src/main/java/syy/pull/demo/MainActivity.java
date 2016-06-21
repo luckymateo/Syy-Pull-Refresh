@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import syy.pull.R;
 import view.library.refresh.PullRecyclerViewLayout;
 import view.library.refresh.PullRefreshListener;
 
