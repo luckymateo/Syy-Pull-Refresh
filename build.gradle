@@ -29,7 +29,7 @@ ext {
     supportLibraryVersion = '23.2.1'
 
     dependencies = [
-            butterknife      : 'com.jakewharton:butterknife:7.0.1',
+            butterknife      : "com.jakewharton:butterknife:7.0.1",
             appCompat        : "com.android.support:appcompat-v7:$supportLibraryVersion",
             recyclerView     : "com.android.support:recyclerview-v7:$supportLibraryVersion",
             swipeToLoadLayout: "com.github.Aspsine:SwipeToLoadLayout:$swipeToLoadLayoutVersion"//Pull to refresh and load more
