@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <view.library.refresh.ClassicLoadMoreFooterView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="#3afafa"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -23,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
             android:layout_toLeftOf="@+id/tvLoadMore"
-            android:background="@mipmap/qq_refresh_success" />
+            android:background="@mipmap/refresh_success" />
 
         <TextView
             android:id="@+id/tvLoadMore"

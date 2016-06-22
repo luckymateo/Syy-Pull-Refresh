@@ -64,7 +64,6 @@ public class ClassicPullRefreshHeaderView extends SwipeRefreshHeaderLayout {
     public void onRefresh() {
         ivSuccess.setVisibility(GONE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(VISIBLE);
         tvRefresh.setText("REFRESHING");
     }
@@ -72,12 +71,12 @@ public class ClassicPullRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     public void onPrepare() {
         Log.d("RefreshHeader", "onPrepare()");
+        ivArrow.setVisibility(VISIBLE);
     }
 
     @Override
     public void onMove(int y, boolean isComplete, boolean automatic) {
         if (!isComplete) {
-            ivArrow.setVisibility(VISIBLE);
             progressBar.setVisibility(GONE);
             ivSuccess.setVisibility(GONE);
             if (y > mHeaderHeight) {
@@ -93,7 +92,6 @@ public class ClassicPullRefreshHeaderView extends SwipeRefreshHeaderLayout {
                     ivArrow.startAnimation(rotateDown);
                     rotated = false;
                 }
-
                 tvRefresh.setText("SWIPE TO REFRESH");
             }
         }
@@ -102,6 +100,7 @@ public class ClassicPullRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     public void onRelease() {
         Log.d("RefreshHeader", "onRelease()");
+        ivArrow.setVisibility(GONE);
     }
 
     @Override
@@ -109,7 +108,6 @@ public class ClassicPullRefreshHeaderView extends SwipeRefreshHeaderLayout {
         rotated = false;
         ivSuccess.setVisibility(VISIBLE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(GONE);
         tvRefresh.setText("COMPLETE");
     }
@@ -119,7 +117,6 @@ public class ClassicPullRefreshHeaderView extends SwipeRefreshHeaderLayout {
         rotated = false;
         ivSuccess.setVisibility(GONE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(GONE);
     }
 
