@@ -17,4 +17,6 @@ public interface PullRefreshListener<T, R> extends OnRefreshListener, OnLoadMore
     void onLoadMoreData(R data);
 
     void onCompleteRefresh(String action);
+
+    void onReload();
 }
