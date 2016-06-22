@@ -74,7 +74,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void onRefreshFailed() {
+    public void onReload() {
         presenter.onRefresh();
     }
+
 }

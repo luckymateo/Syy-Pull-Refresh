@@ -31,9 +31,9 @@ public class ClassicRecyclerViewLayout extends FrameLayout implements View.OnCli
     private AnimationDrawable mAnimDrawable;
     private boolean animation;
     private boolean autoRefresh;
-    private PullRefreshFailed refreshFailed;
+    private PullRefreshListener refreshFailed;
 
-    public void setRefreshFailed(PullRefreshFailed refreshFailed) {
+    public void setRefreshFailed(PullRefreshListener refreshFailed) {
         this.refreshFailed = refreshFailed;
     }
 
@@ -133,7 +133,7 @@ public class ClassicRecyclerViewLayout extends FrameLayout implements View.OnCli
             mIvLoading.setBackgroundDrawable(getResources().getDrawable(R.drawable.loading_animation));
             mAnimDrawable = (AnimationDrawable) mIvLoading.getBackground();
             mAnimDrawable.start();
-            refreshFailed.onRefreshFailed();
+            refreshFailed.onReload();
         }
     }
 }
