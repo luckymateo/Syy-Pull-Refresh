@@ -34,3 +34,5 @@ proguard/
 .DS_Store
 app/libs/
 library/libs/
+.idea
+build
