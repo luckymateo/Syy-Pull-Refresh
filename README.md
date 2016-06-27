@@ -15,7 +15,7 @@ Step 1.Add the JitPack repository to your build file Add it in your root build.g
 Step 2. Add the dependency
 
         dependencies {
-            compile 'com.github.SmileyCloud:Syy-Pull-Refresh:v1.0.0'
+            compile 'com.github.SmileyCloud:Syy-Pull-Refresh:v1.0.2'
         }
 
 ##Thanks
