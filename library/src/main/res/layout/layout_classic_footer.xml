@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<view.library.refresh.ClassicLoadMoreFooterView xmlns:android="http://schemas.android.com/apk/res/android"
+<view.library.refresh.ClassicRefreshFooterView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="#3afafa"
     android:layout_height="wrap_content">
@@ -34,4 +34,4 @@
             android:gravity="center"
             android:text="LoadMore" />
     </RelativeLayout>
-</view.library.refresh.ClassicLoadMoreFooterView>
+</view.library.refresh.ClassicRefreshFooterView>

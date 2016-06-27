@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<view.library.refresh.ClassicPullRefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+<view.library.refresh.ClassicRefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hv_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#3afafa">
+    android:background="#3afafa"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,4 +44,4 @@
             android:layout_centerInParent="true"
             android:gravity="center" />
     </RelativeLayout>
-</view.library.refresh.ClassicPullRefreshHeaderView>
+</view.library.refresh.ClassicRefreshHeaderView>
