@@ -13,12 +13,13 @@ import syy.pull.demo.mvp.MainPresenter;
 import syy.pull.demo.mvp.MainPresenterImpl;
 import syy.pull.demo.mvp.MainView;
 import syy.pull.demo.ui.adapter.MainAdapter;
+import view.library.refresh.ClassicAllRecyclerView;
 import view.library.refresh.ClassicNoPullUpRecyclerView;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
     @Bind(R.id.pvl_layout)
-    ClassicNoPullUpRecyclerView mPvlLayout;
+    ClassicAllRecyclerView mPvlLayout;
     private MainAdapter mAdapter;
     private MainPresenter presenter;
 
