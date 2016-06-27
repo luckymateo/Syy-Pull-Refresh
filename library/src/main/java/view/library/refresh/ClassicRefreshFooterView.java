@@ -54,16 +54,16 @@ public class ClassicRefreshFooterView extends SwipeLoadMoreFooterLayout {
             ivSuccess.setVisibility(GONE);
             progressBar.setVisibility(GONE);
             if (-y >= mFooterHeight) {
-                tvLoadMore.setText("RELEASE TO LOAD MORE");
+                tvLoadMore.setText(ClassicConstant.footerPullRelease);
             } else {
-                tvLoadMore.setText("SWIPE TO LOAD MORE");
+                tvLoadMore.setText(ClassicConstant.footerPullUp);
             }
         }
     }
 
     @Override
     public void onLoadMore() {
-        tvLoadMore.setText("LOADING MORE");
+        tvLoadMore.setText(ClassicConstant.footerRefreshing);
         progressBar.setVisibility(VISIBLE);
     }
 

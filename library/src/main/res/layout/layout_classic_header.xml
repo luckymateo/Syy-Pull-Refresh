@@ -2,7 +2,6 @@
 <view.library.refresh.ClassicRefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/hv_layout"
     android:layout_width="match_parent"
-    android:background="#3afafa"
     android:layout_height="wrap_content">
 
     <RelativeLayout

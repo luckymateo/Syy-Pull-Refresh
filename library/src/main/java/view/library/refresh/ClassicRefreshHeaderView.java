@@ -65,8 +65,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
         ivSuccess.setVisibility(GONE);
         ivArrow.clearAnimation();
         progressBar.setVisibility(VISIBLE);
-        tvRefresh.setText("REFRESHING");
-        ivArrow.setVisibility(GONE);
+        tvRefresh.setText(ClassicConstant.headerRefreshing);
     }
 
     @Override
@@ -78,11 +77,11 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     public void onMove(int y, boolean isComplete, boolean automatic) {
         if (!isComplete) {
+            ivArrow.setVisibility(VISIBLE);
             progressBar.setVisibility(GONE);
             ivSuccess.setVisibility(GONE);
-            ivArrow.setVisibility(VISIBLE);
             if (y > mHeaderHeight) {
-                tvRefresh.setText("RELEASE TO REFRESH");
+                tvRefresh.setText(ClassicConstant.headerPullDown);
                 if (!rotated) {
                     ivArrow.clearAnimation();
                     ivArrow.startAnimation(rotateUp);
@@ -94,7 +93,9 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
                     ivArrow.startAnimation(rotateDown);
                     rotated = false;
                 }
-                tvRefresh.setText("SWIPE TO REFRESH");
+                tvRefresh.setText(ClassicConstant.headerPullRelease);
+            }else {
+                ivArrow.setVisibility(GONE);
             }
         }
     }
@@ -111,8 +112,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
         ivSuccess.setVisibility(VISIBLE);
         ivArrow.clearAnimation();
         progressBar.setVisibility(GONE);
-        tvRefresh.setText("COMPLETE");
-        ivArrow.setVisibility(GONE);
+        tvRefresh.setText(ClassicConstant.Complete);
     }
 
     @Override
@@ -120,7 +120,6 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
         rotated = false;
         ivSuccess.setVisibility(GONE);
         ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(GONE);
     }
 
