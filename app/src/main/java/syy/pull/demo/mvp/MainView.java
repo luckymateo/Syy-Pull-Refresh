@@ -2,12 +2,12 @@ package syy.pull.demo.mvp;
 
 import java.util.List;
 
-import view.library.refresh.IPullRefreshListenerI;
+import view.library.refresh.IPullRefreshListener;
 
 /**
  * MainView
  * Created by smileCloud on 16/6/22.
  */
-public interface MainView extends IPullRefreshListenerI<List<String>, List<String>> {
+public interface MainView extends IPullRefreshListener<List<String>, List<String>> {
 
 }

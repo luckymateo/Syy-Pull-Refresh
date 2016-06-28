@@ -30,11 +30,11 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
     private FrameLayout mFlLoading;
 
     private AnimationDrawable mAnimDrawable;
-    private IPullRefreshListenerI mRefreshListener;
+    private IPullRefreshListener mRefreshListener;
     private boolean animation;
     private boolean autoRefresh;
 
-    public void setPullRefreshListener(IPullRefreshListenerI refreshListener) {
+    public void setPullRefreshListener(IPullRefreshListener refreshListener) {
         this.mRefreshListener = refreshListener;
     }
 

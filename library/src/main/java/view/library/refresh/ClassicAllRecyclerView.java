@@ -30,11 +30,11 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private FrameLayout mFlLoading;
 
     private AnimationDrawable mAnimDrawable;
-    private IPullRefreshListenerI mRefreshListener;
+    private IPullRefreshListener mRefreshListener;
     private boolean animation;
     private boolean autoRefresh;
 
-    public void setPullRefreshListener(IPullRefreshListenerI refreshListener) {
+    public void setPullRefreshListener(IPullRefreshListener refreshListener) {
         this.mRefreshListener = refreshListener;
     }
 
@@ -110,6 +110,10 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
         mIvLoading.setVisibility(View.GONE);
         mSwipeToLoadLayout.setVisibility(View.VISIBLE);
         mAnimDrawable.stop();
+    }
+
+    public RecyclerView getRecyclerView(){
+        return mSwipeTarget;
     }
 
     public void setAdapter(RecyclerView.Adapter adapter) {
