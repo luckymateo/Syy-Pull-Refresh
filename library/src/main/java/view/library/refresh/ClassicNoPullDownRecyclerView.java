@@ -22,7 +22,7 @@ import view.library.R;
  * PullRecyclerViewLayout
  * Created by smileCloud on 16/6/21.
  */
-public class ClassicNoPullDownRecyclerView extends FrameLayout implements View.OnClickListener, SwipeToLoadListener {
+public class ClassicNoPullDownRecyclerView extends FrameLayout implements View.OnClickListener, ISwipeToLoadListener {
 
     private ImageView mIvLoading;
     private RecyclerView mSwipeTarget;
@@ -30,11 +30,11 @@ public class ClassicNoPullDownRecyclerView extends FrameLayout implements View.O
     private FrameLayout mFlLoading;
 
     private AnimationDrawable mAnimDrawable;
-    private PullRefreshListener mRefreshListener;
+    private IPullRefreshListenerI mRefreshListener;
     private boolean animation;
     private boolean autoRefresh;
 
-    public void setPullRefreshListener(PullRefreshListener refreshListener) {
+    public void setPullRefreshListener(IPullRefreshListenerI refreshListener) {
         this.mRefreshListener = refreshListener;
     }
 
