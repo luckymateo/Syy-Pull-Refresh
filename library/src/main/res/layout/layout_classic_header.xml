@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="48dp"
             android:layout_toLeftOf="@+id/tvRefresh"
-            android:background="@mipmap/classic_pull_arrow" />
+            android:src="@mipmap/classic_pull_arrow" />
 
         <ImageView
             android:id="@+id/ivSuccess"

@@ -77,7 +77,6 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     public void onMove(int y, boolean isComplete, boolean automatic) {
         if (!isComplete) {
-            ivArrow.setVisibility(VISIBLE);
             progressBar.setVisibility(GONE);
             ivSuccess.setVisibility(GONE);
             if (y > mHeaderHeight) {
@@ -94,8 +93,6 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
                     rotated = false;
                 }
                 tvRefresh.setText(ClassicConstant.headerPullRelease);
-            }else {
-                ivArrow.setVisibility(GONE);
             }
         }
     }
@@ -103,6 +100,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     public void onRelease() {
         Log.d("RefreshHeader", "onRelease()");
+        ivArrow.clearAnimation();
         ivArrow.setVisibility(GONE);
     }
 
