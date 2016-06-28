@@ -2,7 +2,6 @@ package syy.pull.demo.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
@@ -14,7 +13,6 @@ import syy.pull.demo.mvp.MainPresenterImpl;
 import syy.pull.demo.mvp.MainView;
 import syy.pull.demo.ui.adapter.MainAdapter;
 import view.library.refresh.ClassicAllRecyclerView;
-import view.library.refresh.ClassicNoPullUpRecyclerView;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 
@@ -33,11 +31,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     private void initRecyclerView() {
-        mPvlLayout.setPullListener(this);
-        mPvlLayout.setRefreshFailed(this);
-        RecyclerView mRecyclerView = mPvlLayout.initRecyclerView();
+        mPvlLayout.setPullRefreshListener(this);
         mAdapter = new MainAdapter(this);
-        mRecyclerView.setAdapter(mAdapter);
+        mPvlLayout.setAdapter(mAdapter);
     }
 
     private void initPresenter() {
@@ -62,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 mPvlLayout.onCompleteRefresh(action);//1秒的等待时间
             }
         }, 1000);
+//        mPvlLayout.onCompleteRefresh(action);//1秒的等待时间
     }
 
     @Override

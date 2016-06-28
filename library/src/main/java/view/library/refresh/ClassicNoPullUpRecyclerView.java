@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,7 +22,7 @@ import view.library.R;
  * PullRecyclerViewLayout
  * Created by smileCloud on 16/6/21.
  */
-public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnClickListener {
+public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnClickListener, ISwipeToLoadListener {
 
     private ImageView mIvLoading;
     private RecyclerView mSwipeTarget;
@@ -29,12 +30,12 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
     private FrameLayout mFlLoading;
 
     private AnimationDrawable mAnimDrawable;
+    private IPullRefreshListener mRefreshListener;
     private boolean animation;
     private boolean autoRefresh;
-    private PullRefreshListener refreshFailed;
 
-    public void setRefreshFailed(PullRefreshListener refreshFailed) {
-        this.refreshFailed = refreshFailed;
+    public void setPullRefreshListener(IPullRefreshListener refreshListener) {
+        this.mRefreshListener = refreshListener;
     }
 
     public ClassicNoPullUpRecyclerView(Context context) {
@@ -57,15 +58,42 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
     private void setupView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_no_pull_up_recyclerview, this);
         mIvLoading = (ImageView) findViewById(R.id.iv_loading);
-        mIvLoading.setOnClickListener(this);
         mSwipeTarget = (RecyclerView) findViewById(R.id.swipe_target);
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         mFlLoading = (FrameLayout) findViewById(R.id.fl_loading);
-        initLoadAnimation();
+        init();
+    }
+
+    private void init() {
+        initAllListener();//下拉刷新，上拉加载，是否自动刷新的监听
+        mIvLoading.setOnClickListener(this);//加载失败点击回调
+        initRecyclerView();//初始化RecyclerView以及监听
+        initLoadAnimation();//初始化动画
+    }
+
+    private void initAllListener() {
+        mSwipeToLoadLayout.setOnRefreshListener(this);
+        mSwipeToLoadLayout.setOnLoadMoreListener(this);
+        mSwipeToLoadLayout.setRefreshing(autoRefresh);
+    }
+
+    private void initRecyclerView() {
+        mSwipeTarget.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    if (!ViewCompat.canScrollVertically(recyclerView, 1)) {
+                        mSwipeToLoadLayout.setLoadingMore(true);
+                    }
+                }
+            }
+        });
+        mSwipeTarget.setLayoutManager(new LinearLayoutManager(getContext()));
+        mSwipeTarget.setHasFixedSize(true);
+        mSwipeTarget.setItemAnimator(new DefaultItemAnimator());
     }
 
     private void initLoadAnimation() {
-        mSwipeToLoadLayout.setRefreshing(autoRefresh);
         mAnimDrawable = (AnimationDrawable) mIvLoading.getBackground();
         if (animation) {
             mAnimDrawable.start();
@@ -84,38 +112,21 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
         mAnimDrawable.stop();
     }
 
-    private void setRefreshingComplete(boolean refreshingComplete) {
-        onLoadComplete();
-        mSwipeToLoadLayout.setRefreshing(refreshingComplete);
-    }
-
-    private void setLoadingMoreComplete(boolean loadingMoreComplete) {
-        onLoadComplete();
-        mSwipeToLoadLayout.setLoadingMore(loadingMoreComplete);
-    }
-
-    public RecyclerView initRecyclerView() {
-        mSwipeTarget.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSwipeTarget.setHasFixedSize(true);
-        mSwipeTarget.setItemAnimator(new DefaultItemAnimator());
-        return mSwipeTarget;
-    }
-
-    public void setPullListener(PullRefreshListener listener) {
-        mSwipeToLoadLayout.setOnRefreshListener(listener);
-        mSwipeToLoadLayout.setOnLoadMoreListener(listener);
+    public void setAdapter(RecyclerView.Adapter adapter) {
+        mSwipeTarget.setAdapter(adapter);
     }
 
     public void onCompleteRefresh(String action) {
+        mSwipeToLoadLayout.setRefreshing(false);
+        mSwipeToLoadLayout.setLoadingMore(false);
         switch (action) {
-            case ClassicConstant.loadMoreComplete:
-                setLoadingMoreComplete(false);
-                break;
             case ClassicConstant.refreshComplete:
-                setRefreshingComplete(false);
+                onLoadComplete();
+                break;
+            case ClassicConstant.loadMoreComplete:
+                onLoadComplete();
                 break;
             case ClassicConstant.onFailedComplete:
-                mSwipeToLoadLayout.setRefreshing(false);
                 if (mIvLoading.getVisibility() != GONE) {
                     mIvLoading.setBackgroundDrawable(getResources().getDrawable(R.mipmap.ic_launcher));
                 }
@@ -127,13 +138,30 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
     public void onClick(View v) {
         int itemId = v.getId();
         if (itemId == R.id.iv_loading) {
-            if (refreshFailed == null) {
+            if (mRefreshListener == null) {
                 return;
             }
             mIvLoading.setBackgroundDrawable(getResources().getDrawable(R.drawable.loading_animation));
             mAnimDrawable = (AnimationDrawable) mIvLoading.getBackground();
             mAnimDrawable.start();
-            refreshFailed.onReload();
+            mRefreshListener.onReload();
         }
     }
+
+    @Override
+    public void onLoadMore() {
+        if (mRefreshListener == null) {
+            return;
+        }
+        mRefreshListener.onLoadMore();
+    }
+
+    @Override
+    public void onRefresh() {
+        if (mRefreshListener == null) {
+            return;
+        }
+        mRefreshListener.onRefresh();
+    }
+
 }
