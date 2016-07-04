@@ -9,11 +9,11 @@ package view.library.refresh;
  * @param <R>pull down To Load More Data
  */
 public interface IPullRefreshListener<T, R> extends ISwipeToLoadListener {
+
     void onRefreshData(T data);
 
     void onLoadMoreData(R data);
 
     void onCompleteRefresh(String action);
 
-    void onReload();
 }

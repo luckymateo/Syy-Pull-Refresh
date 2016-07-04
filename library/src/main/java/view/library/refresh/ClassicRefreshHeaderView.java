@@ -13,10 +13,8 @@ import com.aspsine.swipetoloadlayout.SwipeRefreshHeaderLayout;
 
 import view.library.R;
 
-
 /**
- * ClassicPullRefreshHeaderView
- * Created by SmileCloud on 2016/6/21.
+ * Created by Aspsine on 2015/9/9.
  */
 public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
 
@@ -54,6 +52,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
+
         tvRefresh = (TextView) findViewById(R.id.tvRefresh);
         ivArrow = (ImageView) findViewById(R.id.ivArrow);
         ivSuccess = (ImageView) findViewById(R.id.ivSuccess);
@@ -64,19 +63,20 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
     public void onRefresh() {
         ivSuccess.setVisibility(GONE);
         ivArrow.clearAnimation();
+        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(VISIBLE);
         tvRefresh.setText(ClassicConstant.headerRefreshing);
     }
 
     @Override
     public void onPrepare() {
-        Log.d("RefreshHeader", "onPrepare()");
-        ivArrow.setVisibility(VISIBLE);
+        Log.d("TwitterRefreshHeader", "onPrepare()");
     }
 
     @Override
     public void onMove(int y, boolean isComplete, boolean automatic) {
         if (!isComplete) {
+            ivArrow.setVisibility(VISIBLE);
             progressBar.setVisibility(GONE);
             ivSuccess.setVisibility(GONE);
             if (y > mHeaderHeight) {
@@ -92,6 +92,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
                     ivArrow.startAnimation(rotateDown);
                     rotated = false;
                 }
+
                 tvRefresh.setText(ClassicConstant.headerPullRelease);
             }
         }
@@ -99,9 +100,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
 
     @Override
     public void onRelease() {
-        Log.d("RefreshHeader", "onRelease()");
-        ivArrow.clearAnimation();
-        ivArrow.setVisibility(GONE);
+        Log.d("TwitterRefreshHeader", "onRelease()");
     }
 
     @Override
@@ -109,6 +108,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
         rotated = false;
         ivSuccess.setVisibility(VISIBLE);
         ivArrow.clearAnimation();
+        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(GONE);
         tvRefresh.setText(ClassicConstant.Complete);
     }
@@ -118,6 +118,7 @@ public class ClassicRefreshHeaderView extends SwipeRefreshHeaderLayout {
         rotated = false;
         ivSuccess.setVisibility(GONE);
         ivArrow.clearAnimation();
+        ivArrow.setVisibility(GONE);
         progressBar.setVisibility(GONE);
     }
 

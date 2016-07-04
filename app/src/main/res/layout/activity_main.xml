@@ -9,7 +9,8 @@
     <view.library.refresh.ClassicAllRecyclerView
         android:id="@+id/pvl_layout"
         android:layout_width="match_parent"
-        app:autoRefresh="true"
+        app:autoRefresh="false"
         app:loadAnimation="true"
+        app:autoLoadMore="true"
         android:layout_height="match_parent" />
 </RelativeLayout>
