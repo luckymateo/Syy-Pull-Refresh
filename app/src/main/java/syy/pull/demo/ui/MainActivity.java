@@ -19,35 +19,36 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Bind(R.id.pvl_layout)
     ClassicAllRecyclerView mPvlLayout;
     private MainAdapter mAdapter;
-    private MainPresenter presenter;
+    private MainPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initRecyclerView();
+        initRecyclerViewLayout();
         initPresenter();
     }
 
-    private void initRecyclerView() {
+    private void initRecyclerViewLayout() {
         mPvlLayout.setPullRefreshListener(this);
+        mPvlLayout.setLoadAnimationListener(this);
         mAdapter = new MainAdapter(this);
         mPvlLayout.setAdapter(mAdapter);
     }
 
     private void initPresenter() {
-        presenter = new MainPresenterImpl(this);
+        mPresenter = new MainPresenterImpl(this);
     }
 
     @Override
     public void onLoadMore() {
-        presenter.onLoadMore();
+        mPresenter.onLoadMore();
     }
 
     @Override
     public void onRefresh() {
-        presenter.onRefresh();
+        mPresenter.onRefresh();
     }
 
     @Override
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 mPvlLayout.onCompleteRefresh(action);//1秒的等待时间
             }
         }, 1000);
-//        mPvlLayout.onCompleteRefresh(action);//1秒的等待时间
     }
 
     @Override
@@ -72,8 +72,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public void onReload() {
-        presenter.onRefresh();
+    public void onAnimationReload() {
+        mPresenter.onRefresh();
+    }
+
+    @Override
+    public void onAnimationLoadRequest() {
+        mPresenter.onRefresh();
     }
 
 }

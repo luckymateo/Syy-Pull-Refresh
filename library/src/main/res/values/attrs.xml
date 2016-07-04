@@ -3,5 +3,6 @@
     <declare-styleable name="ClassicAllRecyclerView">
         <attr name="loadAnimation" format="boolean" />
         <attr name="autoRefresh" format="boolean" />
+        <attr name="autoLoadMore" format="boolean" />
     </declare-styleable>
 </resources>

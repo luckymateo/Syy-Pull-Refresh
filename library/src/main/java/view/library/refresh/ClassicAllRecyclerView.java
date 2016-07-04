@@ -31,11 +31,17 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
 
     private AnimationDrawable mAnimDrawable;
     private IPullRefreshListener mRefreshListener;
+    private ILoadAnimationListener mAnimationListener;
     private boolean animation;
     private boolean autoRefresh;
+    private boolean autoLoadMore;
 
     public void setPullRefreshListener(IPullRefreshListener refreshListener) {
         this.mRefreshListener = refreshListener;
+    }
+
+    public void setLoadAnimationListener(ILoadAnimationListener animationListener) {
+        this.mAnimationListener = animationListener;
     }
 
     public ClassicAllRecyclerView(Context context) {
@@ -50,7 +56,11 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ClassicAllRecyclerView);
         animation = a.getBoolean(R.styleable.ClassicAllRecyclerView_loadAnimation, true);
+        autoLoadMore = a.getBoolean(R.styleable.ClassicAllRecyclerView_autoLoadMore, true);
         autoRefresh = a.getBoolean(R.styleable.ClassicAllRecyclerView_autoRefresh, true);
+        if (animation) {
+            autoRefresh = false;
+        }
         a.recycle();
         setupView(context);
     }
@@ -74,20 +84,27 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private void initAllListener() {
         mSwipeToLoadLayout.setOnRefreshListener(this);
         mSwipeToLoadLayout.setOnLoadMoreListener(this);
-        mSwipeToLoadLayout.setRefreshing(autoRefresh);
+        mSwipeToLoadLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeToLoadLayout.setRefreshing(autoRefresh);
+            }
+        });
     }
 
     private void initRecyclerView() {
-        mSwipeTarget.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!ViewCompat.canScrollVertically(recyclerView, 1)) {
-                        mSwipeToLoadLayout.setLoadingMore(true);
+        if (autoLoadMore) {
+            mSwipeTarget.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        if (!ViewCompat.canScrollVertically(recyclerView, 1)) {
+                            mSwipeToLoadLayout.setLoadingMore(true);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
         mSwipeTarget.setLayoutManager(new LinearLayoutManager(getContext()));
         mSwipeTarget.setHasFixedSize(true);
         mSwipeTarget.setItemAnimator(new DefaultItemAnimator());
@@ -96,7 +113,16 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private void initLoadAnimation() {
         mAnimDrawable = (AnimationDrawable) mIvLoading.getBackground();
         if (animation) {
-            mAnimDrawable.start();
+            mIvLoading.post(new Runnable() {
+                @Override
+                public void run() {
+                    mAnimDrawable.start();
+                    if (mAnimationListener == null) {
+                        return;
+                    }
+                    mAnimationListener.onAnimationLoadRequest();
+                }
+            });
         } else {
             onLoadComplete();
         }
@@ -112,7 +138,7 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
         mAnimDrawable.stop();
     }
 
-    public RecyclerView getRecyclerView(){
+    public RecyclerView getRecyclerView() {
         return mSwipeTarget;
     }
 
@@ -123,6 +149,9 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     public void onCompleteRefresh(String action) {
         mSwipeToLoadLayout.setRefreshing(false);
         mSwipeToLoadLayout.setLoadingMore(false);
+        if (!animation) {
+            return;
+        }
         switch (action) {
             case ClassicConstant.refreshComplete:
                 onLoadComplete();
@@ -142,13 +171,13 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     public void onClick(View v) {
         int itemId = v.getId();
         if (itemId == R.id.iv_loading) {
-            if (mRefreshListener == null) {
+            if (mAnimationListener == null) {
                 return;
             }
             mIvLoading.setBackgroundDrawable(getResources().getDrawable(R.drawable.loading_animation));
             mAnimDrawable = (AnimationDrawable) mIvLoading.getBackground();
             mAnimDrawable.start();
-            mRefreshListener.onReload();
+            mAnimationListener.onAnimationReload();
         }
     }
 

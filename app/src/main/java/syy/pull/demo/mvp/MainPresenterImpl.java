@@ -34,12 +34,12 @@ public class MainPresenterImpl implements MainPresenter {
     public void onRefresh() {
         page = 1;
         loadData();
-        if (onContinue()) {
+//        if (onContinue()) {
             view.onRefreshData(data);
             view.onCompleteRefresh(ClassicConstant.refreshComplete);
-            return;
-        }
-        onFailedComplete();
+//            return;
+//        }
+//        onFailedComplete();
     }
 
     @Override
