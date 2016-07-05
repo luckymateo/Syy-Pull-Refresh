@@ -4,5 +4,6 @@
         <attr name="loadAnimation" format="boolean" />
         <attr name="autoRefresh" format="boolean" />
         <attr name="autoLoadMore" format="boolean" />
+        <attr name="recyclerColor" format="string" />
     </declare-styleable>
 </resources>
