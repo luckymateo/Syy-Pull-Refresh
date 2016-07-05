@@ -35,6 +35,7 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private boolean animation;
     private boolean autoRefresh;
     private boolean autoLoadMore;
+    private String recyclerColor;
 
     public void setPullRefreshListener(IPullRefreshListener refreshListener) {
         this.mRefreshListener = refreshListener;
@@ -58,6 +59,10 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
         animation = a.getBoolean(R.styleable.ClassicAllRecyclerView_loadAnimation, true);
         autoLoadMore = a.getBoolean(R.styleable.ClassicAllRecyclerView_autoLoadMore, true);
         autoRefresh = a.getBoolean(R.styleable.ClassicAllRecyclerView_autoRefresh, true);
+        recyclerColor = a.getString(R.styleable.ClassicAllRecyclerView_recyclerColor);
+        if (recyclerColor == null) {
+            recyclerColor = "#FFFFFF";
+        }
         if (animation) {
             autoRefresh = false;
         }
@@ -69,6 +74,7 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
         LayoutInflater.from(context).inflate(R.layout.layout_all_recyclerview, this);
         mIvLoading = (ImageView) findViewById(R.id.iv_loading);
         mSwipeTarget = (RecyclerView) findViewById(R.id.swipe_target);
+        mSwipeTarget.setBackgroundColor(Color.parseColor(recyclerColor));
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         mFlLoading = (FrameLayout) findViewById(R.id.fl_loading);
         init();
