@@ -24,6 +24,8 @@ import view.library.R;
  */
 public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnClickListener, ISwipeToLoadListener {
 
+    private View headerView;
+
     private ImageView mIvLoading;
     private RecyclerView mSwipeTarget;
     private SwipeToLoadLayout mSwipeToLoadLayout;
@@ -35,6 +37,7 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
     private boolean animation;
     private boolean autoRefresh;
     private boolean autoLoadMore;
+    private String recyclerColor;
 
     public void setPullRefreshListener(IPullRefreshListener refreshListener) {
         this.mRefreshListener = refreshListener;
@@ -58,6 +61,10 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
         animation = a.getBoolean(R.styleable.ClassicAllRecyclerView_loadAnimation, true);
         autoLoadMore = a.getBoolean(R.styleable.ClassicAllRecyclerView_autoLoadMore, true);
         autoRefresh = a.getBoolean(R.styleable.ClassicAllRecyclerView_autoRefresh, true);
+        recyclerColor = a.getString(R.styleable.ClassicAllRecyclerView_recyclerColor);
+        if (recyclerColor == null) {
+            recyclerColor = "#FFFFFF";
+        }
         if (animation) {
             autoRefresh = false;
         }
@@ -71,6 +78,9 @@ public class ClassicNoPullUpRecyclerView extends FrameLayout implements View.OnC
         mSwipeTarget = (RecyclerView) findViewById(R.id.swipe_target);
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         mFlLoading = (FrameLayout) findViewById(R.id.fl_loading);
+        headerView = findViewById(R.id.swipe_refresh_header);
+        headerView.setBackgroundColor(Color.parseColor(recyclerColor));
+        mSwipeToLoadLayout.setBackgroundColor(Color.parseColor(recyclerColor));
         init();
     }
 

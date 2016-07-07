@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:recyclerColor="#AAAAAA"
     tools:context=".ui.MainActivity">
 
     <view.library.refresh.ClassicAllRecyclerView
@@ -13,5 +14,5 @@
         app:autoLoadMore="true"
         app:autoRefresh="false"
         app:loadAnimation="false"
-        app:recyclerColor="#AC43AC" />
+        app:recyclerColor="#AAAAAA" />
 </RelativeLayout>

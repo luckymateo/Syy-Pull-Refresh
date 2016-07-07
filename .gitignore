@@ -16,8 +16,6 @@ gen/
 .gradle/
 build/
 /*/build/
-*.lock
-*.bin
 # Local configuration file (sdk path, etc)
 local.properties
 
@@ -37,3 +35,6 @@ library/libs/
 .idea
 build
 README.md
+*.lock
+*.bin
+
