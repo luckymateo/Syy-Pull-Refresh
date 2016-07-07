@@ -21,7 +21,7 @@
         app:swipe_style="classic">
 
         <include
-            android:id="@id/swipe_refresh_header"
+            android:id="@+id/swipe_refresh_header"
             layout="@layout/layout_classic_header" />
 
         <android.support.v7.widget.RecyclerView

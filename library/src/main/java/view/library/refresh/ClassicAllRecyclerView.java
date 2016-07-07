@@ -24,6 +24,8 @@ import view.library.R;
  */
 public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickListener, ISwipeToLoadListener {
 
+    private View headerView;
+    private View footerView;
     private ImageView mIvLoading;
     private RecyclerView mSwipeTarget;
     private SwipeToLoadLayout mSwipeToLoadLayout;
@@ -77,6 +79,11 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
         mSwipeTarget.setBackgroundColor(Color.parseColor(recyclerColor));
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         mFlLoading = (FrameLayout) findViewById(R.id.fl_loading);
+        headerView = findViewById(R.id.swipe_refresh_header);
+        footerView = findViewById(R.id.swipe_load_more_footer);
+        headerView.setBackgroundColor(Color.parseColor(recyclerColor));
+        footerView.setBackgroundColor(Color.parseColor(recyclerColor));
+        mSwipeToLoadLayout.setBackgroundColor(Color.parseColor(recyclerColor));
         init();
     }
 
