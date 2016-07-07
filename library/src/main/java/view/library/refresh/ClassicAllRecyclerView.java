@@ -26,6 +26,7 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
 
     private View headerView;
     private View footerView;
+
     private ImageView mIvLoading;
     private RecyclerView mSwipeTarget;
     private SwipeToLoadLayout mSwipeToLoadLayout;
