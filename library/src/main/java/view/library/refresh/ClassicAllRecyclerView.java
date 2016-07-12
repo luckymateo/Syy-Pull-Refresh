@@ -98,6 +98,9 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private void initAllListener() {
         mSwipeToLoadLayout.setOnRefreshListener(this);
         mSwipeToLoadLayout.setOnLoadMoreListener(this);
+    }
+
+    public void startRefresh(){
         mSwipeToLoadLayout.post(new Runnable() {
             @Override
             public void run() {
