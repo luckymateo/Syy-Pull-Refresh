@@ -2,6 +2,9 @@ package syy.pull.demo.ui;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private void initRecyclerViewLayout() {
         mPvlLayout.setPullRefreshListener(this);
         mPvlLayout.setLoadAnimationListener(this);
+        View emptyView = LayoutInflater.from(this).inflate(R.layout.empty_view, null);
+        mPvlLayout.setEmptyView(emptyView);
         mAdapter = new MainAdapter(this);
         mPvlLayout.setAdapter(mAdapter);
     }

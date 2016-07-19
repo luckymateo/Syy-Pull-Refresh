@@ -30,13 +30,18 @@ public class MainPresenterImpl implements MainPresenter {
         view.onCompleteRefresh(ClassicConstant.loadMoreComplete);
     }
 
+    int i = 0;
     @Override
     public void onRefresh() {
         page = 1;
         loadData();
+        i++;
+        view.onCompleteRefresh(ClassicConstant.refreshComplete);
+        if (i<3){
+            return;
+        }
 //        if (onContinue()) {
-            view.onRefreshData(data);
-            view.onCompleteRefresh(ClassicConstant.refreshComplete);
+        view.onRefreshData(data);
 //            return;
 //        }
 //        onFailedComplete();

@@ -28,7 +28,7 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private View footerView;
 
     private ImageView mIvLoading;
-    private RecyclerView mSwipeTarget;
+    private EmptyRecyclerView mSwipeTarget;
     private SwipeToLoadLayout mSwipeToLoadLayout;
     private FrameLayout mFlLoading;
 
@@ -46,6 +46,20 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
 
     public void setLoadAnimationListener(ILoadAnimationListener animationListener) {
         this.mAnimationListener = animationListener;
+    }
+
+    /**
+     * 设置空页面,resource
+     */
+    public void setEmptyView(int resource) {
+        mSwipeTarget.setEmptyView(resource);
+    }
+
+    /**
+     * 设置空页面,emptyView
+     */
+    public void setEmptyView(View emptyView) {
+        mSwipeTarget.setEmptyView(emptyView);
     }
 
     public ClassicAllRecyclerView(Context context) {
@@ -76,55 +90,67 @@ public class ClassicAllRecyclerView extends FrameLayout implements View.OnClickL
     private void setupView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.layout_all_recyclerview, this);
         mIvLoading = (ImageView) findViewById(R.id.iv_loading);
-        mSwipeTarget = (RecyclerView) findViewById(R.id.swipe_target);
-        mSwipeTarget.setBackgroundColor(Color.parseColor(recyclerColor));
+        mSwipeTarget = (EmptyRecyclerView) findViewById(R.id.rv_swipe_target);
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.swipeToLoadLayout);
         mFlLoading = (FrameLayout) findViewById(R.id.fl_loading);
         headerView = findViewById(R.id.swipe_refresh_header);
         footerView = findViewById(R.id.swipe_load_more_footer);
-        headerView.setBackgroundColor(Color.parseColor(recyclerColor));
-        footerView.setBackgroundColor(Color.parseColor(recyclerColor));
-        mSwipeToLoadLayout.setBackgroundColor(Color.parseColor(recyclerColor));
         init();
     }
 
     private void init() {
+        initViewColor();//初始化所有View Color
         initAllListener();//下拉刷新，上拉加载，是否自动刷新的监听
-        mIvLoading.setOnClickListener(this);//加载失败点击回调
         initRecyclerView();//初始化RecyclerView以及监听
         initLoadAnimation();//初始化动画
+        mIvLoading.setOnClickListener(this);//加载失败点击回调
+    }
+
+    private void initViewColor() {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeTarget.setBackgroundColor(Color.parseColor(recyclerColor));
+                headerView.setBackgroundColor(Color.parseColor(recyclerColor));
+                footerView.setBackgroundColor(Color.parseColor(recyclerColor));
+                mSwipeToLoadLayout.setBackgroundColor(Color.parseColor(recyclerColor));
+                mSwipeToLoadLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void initAllListener() {
-        mSwipeToLoadLayout.setOnRefreshListener(this);
-        mSwipeToLoadLayout.setOnLoadMoreListener(this);
-    }
-
-    public void startRefresh(){
-        mSwipeToLoadLayout.post(new Runnable() {
+        post(new Runnable() {
             @Override
             public void run() {
+                mSwipeToLoadLayout.setOnRefreshListener(ClassicAllRecyclerView.this);
+                mSwipeToLoadLayout.setOnLoadMoreListener(ClassicAllRecyclerView.this);
                 mSwipeToLoadLayout.setRefreshing(autoRefresh);
             }
         });
     }
 
     private void initRecyclerView() {
-        if (autoLoadMore) {
-            mSwipeTarget.setOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        if (!ViewCompat.canScrollVertically(recyclerView, 1)) {
-                            mSwipeToLoadLayout.setLoadingMore(true);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (autoLoadMore) {
+                    mSwipeTarget.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                                if (!ViewCompat.canScrollVertically(recyclerView, 1)) {
+                                    mSwipeToLoadLayout.setLoadingMore(true);
+                                }
+                            }
                         }
-                    }
+                    });
                 }
-            });
-        }
-        mSwipeTarget.setLayoutManager(new LinearLayoutManager(getContext()));
-        mSwipeTarget.setHasFixedSize(true);
-        mSwipeTarget.setItemAnimator(new DefaultItemAnimator());
+                mSwipeTarget.setLayoutManager(new LinearLayoutManager(getContext()));
+                mSwipeTarget.setHasFixedSize(true);
+                mSwipeTarget.setItemAnimator(new DefaultItemAnimator());
+            }
+        });
     }
 
     private void initLoadAnimation() {

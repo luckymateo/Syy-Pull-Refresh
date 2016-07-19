@@ -24,10 +24,17 @@
             android:id="@+id/swipe_refresh_header"
             layout="@layout/layout_classic_header" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@id/swipe_target"
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/swipe_target"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <view.library.refresh.EmptyRecyclerView
+                android:id="@+id/rv_swipe_target"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <include
             android:id="@+id/swipe_load_more_footer"
